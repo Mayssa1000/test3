@@ -21,3 +21,10 @@ Raccourcis : Ctrl+Z / Ctrl+Y, Suppr, Échap, Ctrl+S (enregistrer), Ctrl+Maj+S (e
 - Dépôt de fichiers raster/vectoriels dans la fenêtre pour lancer leur import.
 
 Limites : le quadrillage est une grille métrique approximée localement en latitude/longitude (adaptée à une zone de travail, pas aux grandes emprises). Les formats propriétaires DWG/SKP/RVT/3DM ne sont pas convertis nativement. Les outils sont ajoutés au front-end existant et doivent être validés avec les jeux de données réels de l’installation.
+
+
+## Ajustements UI/UX
+- Logo de l’application dans l’angle supérieur gauche.
+- Commandes principales regroupées dans les rubans Accueil, Image, Géoréférencement, Carte et Affichage.
+- Modes carte exclusifs et raccourcis Ctrl+Z / Ctrl+Y capturés avant les raccourcis de la carte.
+- Bouton de restauration visible lorsque chaque fenêtre est agrandie.

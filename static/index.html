@@ -1,6 +1,6 @@
 <!doctype html><html lang="fr"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1"><title>KalipheTiles</title>
-<link rel="icon" type="image/png" href="/icon.svg">
+<link rel="icon" type="image/svg+xml" href="/icon.svg" onerror="this.href='/icon.ico'">
 <meta name="color-scheme" content="dark">
 <link href="https://unpkg.com/maplibre-gl@5.6.2/dist/maplibre-gl.css" rel="stylesheet" onerror="this.onerror=null;this.href='/vendor/maplibre-gl.css'">
 <script src="https://unpkg.com/maplibre-gl@5.6.2/dist/maplibre-gl.js" onerror="this.onerror=null;this.src='/vendor/maplibre-gl.js'"></script>
@@ -74,7 +74,7 @@ dialog input{width:100%;padding:6px;margin:4px 0 12px}dialog small{color:#555}
 #landing{position:absolute;inset:0;z-index:50;background:#2a2a2a url(/world.svg) center/contain no-repeat;display:flex;align-items:center;justify-content:center;color:#eee}
 #landing.hide{display:none}
 #landing .lw{background:#14161cdd;border:1px solid #ffffff22;border-radius:14px;padding:26px 36px;text-align:center;max-width:560px;backdrop-filter:blur(3px)}
-#landing .lico{width:132px;height:132px;object-fit:contain;filter:drop-shadow(0 8px 18px #0005)}#landing h1{margin:6px 0 4px;font-size:30px;color:#fca311}
+#landing .lico{width:var(--app-icon-size,132px);height:var(--app-icon-size,132px);object-fit:contain;filter:drop-shadow(0 8px 18px #0005)}#landing h1{margin:6px 0 4px;font-size:30px;color:#fca311}
 #landing p{margin:0 0 14px;color:#cfd2d8}#landing .lb{display:flex;gap:12px;justify-content:center;margin:10px 0}
 #landing button.big{padding:12px 22px;font-size:15px;background:#fca311;color:#14100a;border:0;font-weight:700;border-radius:8px;cursor:pointer}
 #landing button.big+button.big{background:#262a33;color:#eee;border:1px solid #fca311}
@@ -84,7 +84,7 @@ dialog input{width:100%;padding:6px;margin:4px 0 12px}dialog small{color:#555}
 .itab span{overflow:hidden;text-overflow:ellipsis}.itab .x{opacity:.5;font-size:10px;padding:1px 4px;border-radius:50%}.itab .x:hover{opacity:1;background:#fca31144}
 .itab.on{background:#fff;font-weight:600;box-shadow:0 -2px 0 #fca311 inset}.itab.plus{font-size:16px;padding:2px 11px;background:transparent;border:0}
 #w-img #iv{inset:30px 0 0 0}
-.pt{width:46px;height:46px;border:0;border-radius:0;background:url(/loupe.svg) center/contain no-repeat;box-shadow:none;font:0;color:transparent;outline:0}
+.pt{filter:hue-rotate(var(--loupe-hue,0deg));width:46px;height:46px;border:0;border-radius:0;background:url(/loupe.svg) center/contain no-repeat;box-shadow:none;font:0;color:transparent;outline:0}
 .pt .pn{position:absolute;right:-2px;top:-8px;font:700 11px/16px sans-serif;color:#14100a;background:#fca311;border-radius:9px;min-width:17px;padding:0 4px;text-align:center;box-shadow:0 1px 3px #0008}
 .pt.wait{background:url(/loupe.svg) center/contain no-repeat;opacity:.7;filter:hue-rotate(160deg) saturate(1.5)}
 .pt.sel{background:url(/loupe.svg) center/contain no-repeat;outline:0;filter:drop-shadow(0 0 5px #fff) drop-shadow(0 0 3px #2a9d8f)}
@@ -127,6 +127,17 @@ dialog{background:var(--bg2);color:var(--tx);border:1px solid var(--acc)}dialog:
 
 #itabs{background:#090b0e}.itab{background:#1a1d24;color:#cfd2d8;border-color:var(--line)}.itab.on{background:var(--bg3);color:#fff}.itab.plus{background:transparent;color:var(--acc)}
 #mlay{background:#12151bf2;color:var(--tx);border:1px solid var(--line)}.dest span{color:var(--mut)}
+
+
+/* UX refinement: keep primary commands inside the Office-style ribbon */
+header .header-brand{display:flex;align-items:center;padding:0 8px 0 2px;flex:0 0 auto}
+header .header-brand img{display:block;width:var(--app-icon-size,42px);height:var(--app-icon-size,42px);object-fit:contain}
+#office-ribbon .ribbon-group{align-items:center}
+#office-ribbon .ribbon-group button,#office-ribbon .ribbon-group select{white-space:nowrap}
+#office-ribbon .ribbon-group .ribbon-control{min-height:34px}
+.win .wf{min-width:30px!important;font-size:15px!important;font-weight:700}
+.win.full .wf{display:inline-flex!important;visibility:visible!important;opacity:1!important;background:#dbeafe!important;color:#174ea6!important}
+.win.full .wh{position:relative;z-index:2}
 
 /* ===== KalipheTiles final UI: Office-inspired ribbon + docked responsive workspace ===== */
 :root{--office-blue:#185abd;--office-blue-2:#0f6cbd;--office-line:#d7deea;--office-bg:#f4f7fb;--office-text:#172033;--office-panel:#fff;--office-shadow:0 1px 4px #0b1e3a12}
@@ -201,8 +212,11 @@ header .menu-pop a:hover{background:#e8f0fe}
 .ribbon-panel{display:flex;align-items:stretch;gap:8px;padding:7px 10px;min-height:62px;overflow-x:auto}
 .ribbon-panel[hidden]{display:none!important}
 .ribbon-group{display:flex;align-items:center;gap:5px;position:relative;padding:0 9px 13px;border-right:1px solid #e3e8f0;white-space:nowrap}
-.ribbon-group button{border:1px solid #dce3ed!important;background:#f8faff!important;color:#26364f!important;border-radius:5px!important;padding:7px 10px!important;min-height:31px!important}
+.ribbon-group button{display:inline-flex;align-items:center;gap:4px;border:1px solid #dce3ed!important;background:#f8faff!important;color:#26364f!important;border-radius:5px!important;padding:5px 7px!important;min-height:27px!important;font-size:11px!important}
 .ribbon-group button:hover{background:#e8f0fe!important;border-color:#b7cdf5!important}
+.ribbon-group details{position:relative;display:inline-flex;align-items:center}.ribbon-group details>summary{cursor:pointer;list-style:none;border:1px solid #dce3ed;background:#f8faff;border-radius:5px;padding:6px 8px;font-size:11px}.ribbon-group details[open] .menu-pop{top:100%;left:0;z-index:1000}.ribbon-group select{max-width:190px;min-height:28px;padding:4px 6px;border:1px solid #dce3ed;border-radius:5px;background:#f8faff;color:#26364f;font-size:11px}
+.ribbon-group .ribbon-control{display:inline-flex;align-items:center;white-space:nowrap}
+header{flex-wrap:wrap} header .header-brand{margin-right:8px}
 .ribbon-group-label{position:absolute;bottom:-1px;left:0;right:9px;text-align:center;font-size:10px;color:#7b8799;letter-spacing:.2px}
 #ws{min-height:0;flex:1 1 auto}
 @media(max-width:900px){#office-ribbon .ribbon-panel{min-height:54px;padding:5px} .ribbon-group{padding-left:4px;padding-right:6px}}
@@ -212,8 +226,8 @@ header .menu-pop a:hover{background:#e8f0fe}
 
 </style></head><body>
 <header>
- <b>KalipheTiles</b>
- <details><summary>Fichier ▾</summary><div class="menu-pop"><label title="Importer une image raster">🖼 Image raster (JPG, PNG, TIFF, BMP, GIF, WebP…) <input id="file-menu-proxy" type="file" accept=".jpg,.jpeg,.jfif,.png,.tif,.tiff,.webp,.bmp,.gif,.avif,.ico,.jp2,.j2k,.ppm,.pgm,.pbm,.pnm" style="display:none"></label><label title="Importer des vecteurs, DXF, PDF vectoriel ou SVG">🗺️ Import vecteur / CAD<input id="vector-file" type="file" accept=".geojson,.json,.kml,.zip,.dxf,.svg,.pdf" style="display:none"></label><button id="vector-dxf" title="Exporter le dernier vecteur importé en DXF">⇩ Export DXF</button><button id="pmtiles-install" title="Installer automatiquement le convertisseur officiel PMTiles">⬇ Installer PMTiles</button><button id="pmtiles-export" title="Convertir les MBTiles générés en PMTiles (installation automatique si nécessaire)">⇩ Export PMTiles</button><button id="b-opentop-menu" type="button">📂 Ouvrir projet</button></div></details>
+ <b class="header-brand"><img src="/icon.svg" onerror="this.onerror=null;this.src='/icon.png'" alt="Logo KalipheTiles" title="KalipheTiles"></b>
+ <details id="file-menu"><summary>Fichier ▾</summary><div class="menu-pop"><label title="Importer une image raster">🖼 Image raster (JPG, PNG, TIFF, BMP, GIF, WebP…) <input id="file-menu-proxy" type="file" accept=".jpg,.jpeg,.jfif,.png,.tif,.tiff,.webp,.bmp,.gif,.avif,.ico,.jp2,.j2k,.ppm,.pgm,.pbm,.pnm" style="display:none"></label><label title="Importer des vecteurs, DXF, PDF vectoriel ou SVG">🗺️ Import vecteur / CAD<input id="vector-file" type="file" accept=".geojson,.json,.kml,.zip,.dxf,.svg,.pdf" style="display:none"></label><button id="vector-dxf" title="Exporter le dernier vecteur importé en DXF">⇩ Export DXF</button><button id="pmtiles-install" title="Installer automatiquement le convertisseur officiel PMTiles">⬇ Installer PMTiles</button><button id="pmtiles-export" title="Convertir les MBTiles générés en PMTiles (installation automatique si nécessaire)">⇩ Export PMTiles</button><button id="b-opentop-menu" type="button">📂 Ouvrir projet</button></div></details>
  <small id="cad-status" style="max-width:220px"></small>
  <input type="file" id="file" title="Ouvrir une nouvelle image (nouveau projet)" accept=".jpg,.jpeg,.jfif,.png,.tif,.tiff,.webp,.bmp,.gif,.avif,.ico,.jp2,.j2k,.ppm,.pgm,.pbm,.pnm" style="display:none">
  <button id="b-merge-images" title="Assembler les images importées en une image unique">🧩 Fusionner images</button><button id="b-globe" title="Basculer entre vue globe et vue plane" aria-pressed="false">🌐 Vue globe</button><button id="b-savetop" title="Enregistrer le projet (Ctrl+S)">💾 Enregistrer</button><button id="b-opentop" title="Ouvrir un projet .ktproj">📂 Projet</button>
@@ -251,11 +265,11 @@ header .menu-pop a:hover{background:#e8f0fe}
  <div class="ribbon-panel" id="ribbon-panel-export" hidden><div class="ribbon-group"><button data-action="export-tab">📦 Tuiles &amp; export</button><button data-action="save">💾 Enregistrer projet</button><span class="ribbon-group-label">Sortie</span></div></div>
 </nav>
 <div id="ws">
- <div id="landing"><div class="lw"><div class="brand-row"><img class="lico" src="/icon.svg" alt="Logo KalipheTiles"><div><h1>KalipheTiles</h1><p class="tagline">Studio cartographique · Géoréférencement & imagerie</p><div id="user-greeting" class="user-greeting"></div></div></div>
+ <div id="landing"><div class="lw"><div class="brand-row"><img class="lico" src="/icon.svg" onerror="this.onerror=null;this.src='/icon.png'" alt="Logo KalipheTiles"><div><h1>KalipheTiles</h1><p class="tagline">Studio cartographique · Géoréférencement & imagerie</p><div id="user-greeting" class="user-greeting"></div></div></div>
   <p>Un espace de travail cartographique pour géoréférencer vos images, organiser vos calques, assembler vos cartes et exporter vos données géospatiales.</p>
   <div class="lb"><button class="big" id="l-open">＋ Ouvrir une image</button><button class="big" id="l-proj">📂 Ouvrir un projet</button></div>
   <div class="brand-controls"><strong style="font-size:12px;color:#475569;margin-right:4px">Identité visuelle</strong><button type="button" id="logo-pick">Importer un logo</button><input id="logo-file" type="file" accept="image/*,.svg,image/svg+xml" hidden><label for="logo-color">Couleur SVG <input id="logo-color" type="color" value="#185abd" aria-label="Couleur du logo SVG"></label><button type="button" id="logo-reset">Réinitialiser</button><small id="logo-color-note">La recoloration fonctionne pour les logos SVG.</small></div>
-  <div class="login-row"><div><label for="login-name">Votre nom d’utilisateur</label><input id="login-name" type="text" maxlength="60" autocomplete="nickname" placeholder="Ex. KalipheGTU"></div><button type="button" id="login-save">Enregistrer mon nom</button></div>
+  <div class="login-row"><div><label for="login-name">Votre nom d’utilisateur</label><input id="login-name" type="text" maxlength="60" autocomplete="nickname" placeholder="Ex. Mayssa"></div><button type="button" id="login-save">Enregistrer mon nom</button></div>
   <small style="display:block;margin-top:12px">Le nom est enregistré localement dans ce navigateur. Il s’agit d’un profil local, pas d’un compte sécurisé avec mot de passe.</small>
   <small style="display:block;margin-top:12px">Vous pouvez aussi glisser-déposer une image ou un projet .ktproj dans la fenêtre.</small>
   <ol><li>Chargez une image et ajoutez au moins trois points de contrôle.</li><li>Associez les points de l’image à leurs positions sur la carte.</li><li>Vérifiez l’aperçu, puis exportez le résultat.</li></ol></div></div>
@@ -399,8 +413,13 @@ header .menu-pop a:hover{background:#e8f0fe}
   <label for="gcp-label-size">Taille du numéro (px)<input id="gcp-label-size" type="range" min="9" max="18" value="11"><output id="gcp-label-size-value">11 px</output></label>
   <label for="coord-precision">Précision des coordonnées<select id="coord-precision"><option value="3">3 décimales</option><option value="4">4 décimales</option><option value="5">5 décimales</option><option value="6" selected>6 décimales</option><option value="7">7 décimales</option><option value="8">8 décimales</option></select></label>
  </div></details><details class="settings-section"><summary>Options · Dessin et mesure</summary><div class="settings-grid">
-  <label for="default-draw-color">Couleur par défaut des dessins<input id="default-draw-color" type="color" value="#ff8c00"></label>
-  <label for="default-draw-width">Épaisseur par défaut (px)<input id="default-draw-width" type="number" min="1" max="12" value="3"></label>
+  <label for="default-draw-color">Couleur de ligne / dessin<input id="default-draw-color" type="color" value="#ff8c00"></label>
+  <label for="default-draw-fill">Couleur de remplissage<input id="default-draw-fill" type="color" value="#ffcc80"></label>
+  <label for="default-draw-width">Épaisseur de ligne (px)<input id="default-draw-width" type="number" min="1" max="12" value="3"></label>
+  <label for="loupe-color">Couleur de la loupe SVG<input id="loupe-color" type="color" value="#185abd"></label>
+  <label for="app-icon-size">Taille du logo SVG (px)<input id="app-icon-size" type="range" min="60" max="180" value="132"><output id="app-icon-size-value">64 px</output></label>
+  <label for="app-icon-line">Couleur des lignes du logo SVG<input id="app-icon-line" type="color" value="#185abd"></label>
+  <label for="app-icon-fill">Couleur de remplissage du logo SVG<input id="app-icon-fill" type="color" value="#fca311"></label>
  </div></details>
  <p style="font-size:12px;color:#64748b">Ces réglages concernent l’affichage et les valeurs par défaut ; ils ne modifient pas les coordonnées géographiques enregistrées.</p>
  <div class="row" style="justify-content:flex-end;margin-top:16px"><button type="button" id="settings-reset">Réinitialiser</button><button type="button" id="settings-close">Fermer</button><button type="button" id="settings-save" style="background:#185abd;color:#fff">Enregistrer</button></div>
@@ -752,7 +771,7 @@ document.getElementById('measure-line').onclick=()=>setMeasure('line');document.
 const logoImg=document.querySelector('#landing .lico');let originalSvgLogo='';
 function applyLogoColor(color){if(!originalSvgLogo)return;let svg=originalSvgLogo;svg=svg.replace(/currentColor/g,color);svg=svg.replace(/(fill|stroke)=(['"])(?!none|transparent|url\()#[0-9a-fA-F]{3,8}\2/gi,(m,a,q)=>a+'='+q+color+q);svg=svg.replace(/style=(['"])(.*?)\1/gi,(m,q,st)=>'style='+q+st.replace(/(fill|stroke)\s*:\s*#[0-9a-fA-F]{3,8}/gi,'$1:'+color)+q);const uri='data:image/svg+xml;charset=utf-8,'+encodeURIComponent(svg);logoImg.src=uri;try{localStorage.setItem('kaliphetiles_landing_logo',uri);localStorage.setItem('kaliphetiles_landing_svg',originalSvgLogo);localStorage.setItem('kaliphetiles_landing_logo_color',color)}catch(_){}document.getElementById('logo-color-note').textContent='Couleur SVG appliquée';}
 try{const savedSvg=localStorage.getItem('kaliphetiles_landing_svg'),savedLogo=localStorage.getItem('kaliphetiles_landing_logo'),savedColor=localStorage.getItem('kaliphetiles_landing_logo_color');if(savedSvg)originalSvgLogo=savedSvg;if(savedLogo)logoImg.src=savedLogo;if(savedColor)document.getElementById('logo-color').value=savedColor;}catch(_){}
-document.getElementById('logo-pick').onclick=()=>document.getElementById('logo-file').click();document.getElementById('logo-file').onchange=e=>{const f=e.target.files?.[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{if(/\.svg$/i.test(f.name)||String(r.result).includes('<svg')){originalSvgLogo=String(r.result);applyLogoColor(document.getElementById('logo-color').value||'#185abd');}else{originalSvgLogo='';logoImg.src=r.result;localStorage.setItem('kaliphetiles_landing_logo',r.result);localStorage.removeItem('kaliphetiles_landing_svg');document.getElementById('logo-color-note').textContent='Logo raster importé — recoloration SVG indisponible';}}catch(_){alert('Impossible de mémoriser le logo. Essayez un fichier plus petit.')}};if(/\.svg$/i.test(f.name))r.readAsText(f);else r.readAsDataURL(f);};document.getElementById('logo-color').oninput=e=>{if(originalSvgLogo)applyLogoColor(e.target.value);else document.getElementById('logo-color-note').textContent='Importez un logo SVG pour modifier sa couleur.'};document.getElementById('logo-reset').onclick=()=>{try{localStorage.removeItem('kaliphetiles_landing_logo');localStorage.removeItem('kaliphetiles_landing_svg');localStorage.removeItem('kaliphetiles_landing_logo_color')}catch(_){}originalSvgLogo='';logoImg.src='/icon.svg';document.getElementById('logo-color').value='#185abd';document.getElementById('logo-color-note').textContent='Logo par défaut restauré';};
+document.getElementById('logo-pick').onclick=()=>document.getElementById('logo-file').click();document.getElementById('logo-file').onchange=e=>{const f=e.target.files?.[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{if(/\.svg$/i.test(f.name)||String(r.result).includes('<svg')){originalSvgLogo=String(r.result);applyLogoColor(document.getElementById('logo-color').value||'#185abd');}else{originalSvgLogo='';logoImg.src=r.result;localStorage.setItem('kaliphetiles_landing_logo',r.result);localStorage.removeItem('kaliphetiles_landing_svg');document.getElementById('logo-color-note').textContent='Logo raster importé — recoloration SVG indisponible';}}catch(_){alert('Impossible de mémoriser le logo. Essayez un fichier plus petit.')}};if(/\.svg$/i.test(f.name))r.readAsText(f);else r.readAsDataURL(f);};document.getElementById('logo-color').oninput=e=>{if(originalSvgLogo)applyLogoColor(e.target.value);else document.getElementById('logo-color-note').textContent='Importez un logo SVG pour modifier sa couleur.'};document.getElementById('logo-reset').onclick=()=>{try{localStorage.removeItem('kaliphetiles_landing_logo');localStorage.removeItem('kaliphetiles_landing_svg');localStorage.removeItem('kaliphetiles_landing_logo_color')}catch(_){}originalSvgLogo='';logoImg.src='/icon.svg';document.querySelector('header .header-brand img').src='/icon.svg';document.getElementById('logo-color').value='#185abd';document.getElementById('logo-color-note').textContent='Logo par défaut restauré';};
 function updateUserGreeting(){const n=(localStorage.getItem('kaliphetiles_user_name')||'').trim();document.getElementById('user-greeting').textContent=n?'Connecté en tant que '+n:'';document.getElementById('login-name').value=n;}
 updateUserGreeting();document.getElementById('login-save').onclick=()=>{const n=document.getElementById('login-name').value.trim();if(!n){alert('Saisissez un nom d’utilisateur.');return}try{localStorage.setItem('kaliphetiles_user_name',n)}catch(_){}updateUserGreeting();st('Profil local enregistré pour '+n)};document.getElementById('login-name').addEventListener('keydown',e=>{if(e.key==='Enter')document.getElementById('login-save').click()});
 // Prévenir la fermeture si le projet contient des modifications. Les navigateurs imposent leur dialogue natif.
@@ -898,6 +917,17 @@ $("#b-diag").onclick=async()=>{
 $("#dgc").onclick=()=>$("#dg").close();
 
 // ---------- Ruban de travail Office ----------
+// Reorganise les commandes principales dans des groupes de ruban Office.
+(()=>{
+ const group=(panelId,label,ids)=>{const panel=document.getElementById(panelId);if(!panel)return;const g=document.createElement('div');g.className='ribbon-group';const cap=document.createElement('span');cap.className='ribbon-group-label';cap.textContent=label;g.appendChild(cap);ids.forEach(id=>{const el=document.getElementById(id);if(el)g.insertBefore(el,cap);});panel.appendChild(g);};
+ group('ribbon-panel-home','Projet',['file-menu','b-opentop','b-savetop','undo','redo']);
+ group('ribbon-panel-image','Assemblage',['b-merge-images']);
+ group('ribbon-panel-geo','Transformation',['method','go']);
+ group('ribbon-panel-map','Fonds et vue',['base','b-globe']);
+ group('ribbon-panel-view','Paramètres',['b-theme','cfg','b-options','b-general-settings','b-diag']);
+ // Remove now-empty old topbar space by styling relocated controls as compact ribbon controls.
+ ['b-opentop','b-savetop','undo','redo','b-merge-images','b-globe','b-theme','cfg','b-options','b-general-settings','go'].forEach(id=>{const el=document.getElementById(id);if(el)el.classList.add('ribbon-control');});
+})();
 document.querySelectorAll('.ribbon-tab').forEach(tab=>tab.addEventListener('click',()=>{
  document.querySelectorAll('.ribbon-tab').forEach(t=>{const on=t===tab;t.classList.toggle('active',on);t.setAttribute('aria-selected',String(on));});
  document.querySelectorAll('.ribbon-panel').forEach(p=>p.hidden=p.id!=='ribbon-panel-'+tab.dataset.ribbon);
@@ -916,16 +946,36 @@ document.querySelectorAll('.ribbon-group button[data-action]').forEach(btn=>btn.
  }
 }));
 
+// Prefer the updated SVG map background, but fall back to PNG if an older install lacks it.
+(()=>{const im=new Image();im.onerror=()=>{document.getElementById('landing').style.backgroundImage='url(/world.png)';};im.src='/world.svg';})();
 // ---------- Paramètres généraux, aide et réglages de précision ----------
 const generalSettings=document.getElementById('general-settings');
-const markerSettingDefaults={size:46,color:'#185abd',opacity:100,label:11,precision:6,drawColor:'#ff8c00',drawWidth:3};
+const markerSettingDefaults={size:46,color:'#185abd',opacity:100,label:11,precision:6,drawColor:'#ff8c00',drawFill:'#ffcc80',drawWidth:3,loupeColor:'#185abd',iconSize:132,iconLine:'#185abd',iconFill:'#fca311'};
 function readMarkerSettings(){try{return {...markerSettingDefaults,...JSON.parse(localStorage.getItem('kt-ui-settings')||'{}')}}catch(_){return {...markerSettingDefaults}}}
-function applyMarkerSettings(o){document.documentElement.style.setProperty('--gcp-marker-size',`${o.size}px`);document.documentElement.style.setProperty('--gcp-marker-color',o.color);document.documentElement.style.setProperty('--gcp-marker-opacity',String(o.opacity/100));document.documentElement.style.setProperty('--gcp-label-size',`${o.label}px`);const n=parseInt(o.color.slice(1),16),r=(n>>16)&255,g=(n>>8)&255,b=n&255,max=Math.max(r,g,b)/255,min=Math.min(r,g,b)/255,d=max-min;let h=0;if(d){if(max===r/255)h=60*(((g-b)/255/d)%6);else if(max===g/255)h=60*((b-r)/255/d+2);else h=60*((r-g)/255/d+4)}h=(h+360)%360;document.documentElement.style.setProperty('--gcp-marker-hue',`${h-25}deg`);const dc=document.getElementById('draw-color'),dw=document.getElementById('draw-width');if(dc)dc.value=o.drawColor;if(dw)dw.value=o.drawWidth;}
-function loadSettingsForm(){const o=readMarkerSettings();document.getElementById('gcp-size').value=o.size;document.getElementById('gcp-size-value').textContent=o.size+' px';document.getElementById('gcp-color').value=o.color;document.getElementById('gcp-opacity').value=o.opacity;document.getElementById('gcp-opacity-value').textContent=o.opacity+' %';document.getElementById('gcp-label-size').value=o.label;document.getElementById('gcp-label-size-value').textContent=o.label+' px';document.getElementById('coord-precision').value=o.precision;document.getElementById('default-draw-color').value=o.drawColor;document.getElementById('default-draw-width').value=o.drawWidth;}
-function collectSettings(){return {size:+document.getElementById('gcp-size').value,color:document.getElementById('gcp-color').value,opacity:+document.getElementById('gcp-opacity').value,label:+document.getElementById('gcp-label-size').value,precision:+document.getElementById('coord-precision').value,drawColor:document.getElementById('default-draw-color').value,drawWidth:Math.max(1,Math.min(12,+document.getElementById('default-draw-width').value||3))}}
+function applyMarkerSettings(o){
+ document.documentElement.style.setProperty('--gcp-marker-size',`${o.size}px`);
+ document.documentElement.style.setProperty('--gcp-marker-color',o.color);
+ document.documentElement.style.setProperty('--gcp-marker-opacity',String(o.opacity/100));
+ document.documentElement.style.setProperty('--gcp-label-size',`${o.label}px`);
+ const dc=document.getElementById('draw-color'),dw=document.getElementById('draw-width');
+ if(dc)dc.value=o.drawColor;if(dw)dw.value=o.drawWidth;
+ const lc=o.loupeColor||'#185abd';
+ const rgb=parseInt(lc.slice(1),16),r=(rgb>>16)&255,g=(rgb>>8)&255,b=rgb&255;
+ const mx=Math.max(r,g,b),mn=Math.min(r,g,b),delta=mx-mn;let hue=0;
+ if(delta){if(mx===r)hue=60*(((g-b)/delta)%6);else if(mx===g)hue=60*((b-r)/delta+2);else hue=60*((r-g)/delta+4);}
+ document.documentElement.style.setProperty('--loupe-hue',`${(hue+360)%360}deg`);
+ document.documentElement.style.setProperty('--app-icon-size',`${o.iconSize||132}px`);
+ recolorDefaultIcon(o.iconLine||'#185abd',o.iconFill||'#fca311');
+ try{if(typeof map!=='undefined'&&map.getLayer('user-measure-area'))map.setPaintProperty('user-measure-area','fill-color',o.drawFill||'#ffcc80');}catch(_){}
+}
+let defaultIconSvg='';
+async function recolorDefaultIcon(line,fill){try{if(!defaultIconSvg){const r=await fetch('/icon.svg');if(!r.ok)throw 0;defaultIconSvg=await r.text();}let svg=defaultIconSvg.replace(/currentColor/g,line);svg=svg.replace(/stroke=(['"])(?!none|transparent)[^'"]*\1/gi,`stroke="${line}"`);svg=svg.replace(/fill=(['"])(?!none|transparent|url\()[^'"]*\1/gi,`fill="${fill}"`);const uri='data:image/svg+xml;charset=utf-8,'+encodeURIComponent(svg);document.querySelectorAll('header .header-brand img, #landing .lico').forEach(img=>{if(!img.dataset.customLogo)img.src=uri;});}catch(_){}}
+function loadSettingsForm(){const o=readMarkerSettings();document.getElementById('gcp-size').value=o.size;document.getElementById('gcp-size-value').textContent=o.size+' px';document.getElementById('gcp-color').value=o.color;document.getElementById('gcp-opacity').value=o.opacity;document.getElementById('gcp-opacity-value').textContent=o.opacity+' %';document.getElementById('gcp-label-size').value=o.label;document.getElementById('gcp-label-size-value').textContent=o.label+' px';document.getElementById('coord-precision').value=o.precision;document.getElementById('default-draw-color').value=o.drawColor;document.getElementById('default-draw-fill').value=o.drawFill||'#ffcc80';document.getElementById('default-draw-width').value=o.drawWidth;document.getElementById('loupe-color').value=o.loupeColor||'#185abd';document.getElementById('app-icon-size').value=o.iconSize||132;document.getElementById('app-icon-size-value').textContent=(o.iconSize||132)+' px';document.getElementById('app-icon-line').value=o.iconLine||'#185abd';document.getElementById('app-icon-fill').value=o.iconFill||'#fca311';}
+function collectSettings(){return {size:+document.getElementById('gcp-size').value,color:document.getElementById('gcp-color').value,opacity:+document.getElementById('gcp-opacity').value,label:+document.getElementById('gcp-label-size').value,precision:+document.getElementById('coord-precision').value,drawColor:document.getElementById('default-draw-color').value,drawFill:document.getElementById('default-draw-fill').value,drawWidth:Math.max(1,Math.min(12,+document.getElementById('default-draw-width').value||3)),loupeColor:document.getElementById('loupe-color').value,iconSize:+document.getElementById('app-icon-size').value,iconLine:document.getElementById('app-icon-line').value,iconFill:document.getElementById('app-icon-fill').value}}
 function saveGeneralSettings(){const o=collectSettings();try{localStorage.setItem('kt-ui-settings',JSON.stringify(o))}catch(_){}applyMarkerSettings(o);generalSettings.close();if(typeof redraw==='function')redraw();}
 applyMarkerSettings(readMarkerSettings());
 document.getElementById('b-general-settings').onclick=()=>{loadSettingsForm();generalSettings.showModal()};document.getElementById('settings-close').onclick=()=>generalSettings.close();document.getElementById('settings-save').onclick=saveGeneralSettings;document.getElementById('settings-reset').onclick=()=>{try{localStorage.removeItem('kt-ui-settings')}catch(_){}loadSettingsForm();applyMarkerSettings(markerSettingDefaults)};
+document.getElementById('app-icon-size').addEventListener('input',e=>{document.getElementById('app-icon-size-value').textContent=e.target.value+' px';document.documentElement.style.setProperty('--app-icon-size',e.target.value+'px')});
 for(const [id,out,suffix] of [['gcp-size','gcp-size-value',' px'],['gcp-opacity','gcp-opacity-value',' %'],['gcp-label-size','gcp-label-size-value',' px']])document.getElementById(id).addEventListener('input',e=>document.getElementById(out).textContent=e.target.value+suffix);
 for(const [id,did] of [['help-open','help-dialog'],['about-open','about-dialog'],['license-open','license-dialog']])document.getElementById(id).onclick=()=>document.getElementById(did).showModal();document.querySelectorAll('[data-close-dialog]').forEach(b=>b.onclick=()=>document.getElementById(b.dataset.closeDialog).close());
 document.getElementById('map-tools-toggle').onclick=()=>{const el=document.getElementById('map-tools');el.classList.toggle('tools-hidden');document.getElementById('map-tools-toggle').setAttribute('aria-pressed',String(!el.classList.contains('tools-hidden')))};
@@ -1392,5 +1442,44 @@ $("#vector-file").addEventListener("change",async ev=>{const f=ev.target.files?.
 $("#vector-dxf").onclick=async()=>{if(!importedVector){cadStatus.textContent="Importez d'abord un vecteur.";return}cadStatus.textContent="Préparation du DXF…";try{const r=await fetch("/api/vector/export-dxf",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({geojson:importedVector,name:"kaliphetiles_vectors"})});if(!r.ok){const j=await r.json();throw Error(j.detail||"export impossible")}const blob=await r.blob(),url=URL.createObjectURL(blob),a=document.createElement("a");a.href=url;a.download="kaliphetiles_vectors.dxf";a.click();URL.revokeObjectURL(url);cadStatus.textContent="DXF exporté."}catch(e){cadStatus.textContent="⚠️ "+e.message}};
 $("#pmtiles-install").onclick=async()=>{cadStatus.textContent="Installation de PMTiles depuis les releases officielles…";const b=$("#pmtiles-install");b.disabled=true;try{const r=await fetch("/api/tools/pmtiles/install",{method:"POST"});const j=await r.json();if(!r.ok)throw Error(j.detail||"installation impossible");cadStatus.textContent="✅ "+j.message+(j.version?" ("+j.version+")":"");b.textContent="✅ PMTiles installé"}catch(e){cadStatus.textContent="⚠️ "+e.message}finally{b.disabled=false}};
 $("#pmtiles-export").onclick=async()=>{const id=(typeof layers!=="undefined"&&layers.length)?layers[Math.max(0,cur||0)].id:null;if(!id){cadStatus.textContent="Importez une image et lancez Géoréférencer d'abord.";return}cadStatus.textContent="Conversion PMTiles…";try{const r=await fetch(`/api/maps/${id}/export-pmtiles`,{method:"POST"});if(!r.ok){const j=await r.json();throw Error(j.detail||"export impossible")}const blob=await r.blob(),url=URL.createObjectURL(blob),a=document.createElement("a");a.href=url;a.download="kaliphetiles.pmtiles";a.click();URL.revokeObjectURL(url);cadStatus.textContent="PMTiles exporté."}catch(e){cadStatus.textContent="⚠️ "+e.message}};
+
+
+// --- Final ribbon organization and interaction fixes ---
+(function organizeRibbonAndWindows(){
+ const group=(panel,label)=>{let p=document.querySelector('#ribbon-panel-'+panel);if(!p)return null;let g=[...p.querySelectorAll('.ribbon-group')].find(x=>x.dataset.extraGroup===label);if(!g){g=document.createElement('div');g.className='ribbon-group';g.dataset.extraGroup=label;const l=document.createElement('span');l.className='ribbon-group-label';l.textContent=label;g.appendChild(l);p.appendChild(g)}return g};
+ const move=(id,panel,label)=>{const el=document.getElementById(id),g=group(panel,label);if(el&&g){el.classList.add('ribbon-control');g.insertBefore(el,g.firstChild)}};
+ // Put actions in the appropriate Office ribbon instead of the crowded top bar.
+ move('b-savetop','home','Projet');move('b-opentop','home','Projet');move('b-merge-images','image','Assemblage');
+ move('method','geo','Transformation');move('go','geo','Transformation');move('base','map','Fonds de carte');move('b-globe','map','Vue');
+ move('b-theme','view','Apparence');move('b-general-settings','view','Préférences');move('b-options','view','Ressources');
+ // Existing ribbon commands remain available; hide redundant generic top-level undo/redo.
+ ['undo','redo','cfg','b-diag'].forEach(id=>{const e=document.getElementById(id);if(e)e.style.display='none'});
+ // Ensure map ribbon includes the point/drawing mode controls and quick map commands.
+ const mg=group('map','Mode de travail');['mode-georef','mode-draw','map-tools-toggle'].forEach(id=>{const el=document.getElementById(id);if(el&&mg){el.classList.add('ribbon-control');mg.insertBefore(el,mg.firstChild)}});
+ // Avoid duplicate project-open controls outside the ribbon.
+ const openMenu=document.getElementById('b-opentop-menu');if(openMenu)openMenu.style.display='none';
+ // Fullscreen controls always show a restore affordance while expanded.
+ function refreshFull(w){const b=w.querySelector('.wf');if(!b)return;const full=w.classList.contains('full');b.textContent=full?'⤢':'⛶';b.title=full?'Restaurer la fenêtre':'Plein écran';b.setAttribute('aria-label',full?'Restaurer la fenêtre':'Plein écran');}
+ function toggleFull(w){const was=w.classList.contains('full');w.classList.toggle('full',!was);w.classList.remove('min');refreshFull(w);setTimeout(()=>{try{map.resize()}catch(_){};if(w.id==='w-img'&&typeof fit==='function')fit()},120)}
+ document.querySelectorAll('.win').forEach(w=>{const b=w.querySelector('.wf');if(b)b.onclick=e=>{e.preventDefault();e.stopPropagation();toggleFull(w)};const h=w.querySelector('.wh');if(h)h.ondblclick=e=>{if(e.target.closest('button,select,input,a'))return;toggleFull(w)};refreshFull(w)});
+ // Capture keyboard shortcuts before MapLibre handles them. The active map mode decides history.
+ window.addEventListener('keydown',e=>{
+   const key=e.key.toLowerCase(),mod=e.ctrlKey||e.metaKey;
+   if(!mod||!['z','y'].includes(key))return;
+   const target=e.target,tag=(target?.tagName||'').toLowerCase();
+   if(tag==='input'||tag==='textarea'||target?.isContentEditable)return;
+   const mapEl=document.getElementById('w-map');
+   const mapActive=!!(mapEl&&(mapEl.contains(target)||mapEl.matches(':hover')||document.activeElement===mapEl));
+   if(!mapActive)return;
+   e.preventDefault();e.stopPropagation();e.stopImmediatePropagation();
+   const redo=key==='y'||(key==='z'&&e.shiftKey);
+   if(mapWorkMode==='draw'){redo?redoMeasure():undoMeasure();}
+   else {redo?redo():undo();}
+ },true);
+ // Map mode controls are mutually exclusive: georeferencing clicks cannot leak into drawing and vice versa.
+ const originalSetMode=window.setMapWorkMode;
+ const geoBtn=document.getElementById('mode-georef'),drawBtn=document.getElementById('mode-draw');
+ if(geoBtn&&drawBtn){geoBtn.title='Les clics sur la carte placent uniquement des points de contrôle';drawBtn.title='Les clics sur la carte servent uniquement aux outils de mesure et de dessin';}
+})();
 
 </script></body></html>
