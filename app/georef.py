@@ -155,7 +155,19 @@ def make_tiles(layers, out_dir, progress=lambda f: None, zmin=None, zmax=None, t
         raise ValueError(f"{total:,} tuiles : trop (max {MAX_TILES:,}). Réduisez le zoom maximal.")
     os.makedirs(out_dir, exist_ok=True)
     done = [0]; lock = threading.Lock(); step = ts // 32; K = ts // step + 2
-    pool = ThreadPoolExecutor(min(8, os.cpu_count() or 2))
+    # Respect the configured worker count for raster tile generation. RAM budget remains
+    # advisory: Python/NumPy allocations and OS memory limits are platform-dependent.
+    workers = min(8, os.cpu_count() or 2)
+    try:
+        import json
+        from pathlib import Path
+        settings_path = Path.home() / ".kaliphetiles.json"
+        if settings_path.exists():
+            configured = int(json.loads(settings_path.read_text(encoding="utf-8")).get("cpu_workers", workers))
+            workers = max(1, min(os.cpu_count() or 1, configured, 8))
+    except (OSError, ValueError, TypeError, json.JSONDecodeError):
+        pass
+    pool = ThreadPoolExecutor(max_workers=workers)
     for z in range(zmax, zmin - 1, -1):
         size = 2 * ORIGIN / 2 ** z; res = size / ts
         srcs = [reduced(l, res / l.mpp) for l in layers]
