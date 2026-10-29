@@ -73,9 +73,9 @@ dialog input{width:100%;padding:6px;margin:4px 0 12px}dialog small{color:#555}
 
 
 /* ===== v9 : accueil, onglets d'images, loupe, calques sur la carte ===== */
-#landing{position:absolute;inset:0;z-index:50;background-color:#2a2a2a;background-image:url(/world.svg),url(/world.png);background-position:center,center;background-size:contain,contain;background-repeat:no-repeat,no-repeat;display:flex;align-items:center;justify-content:center;color:#eee}
+#landing{position:absolute;inset:0;z-index:50;background-color:#2a2a2a;background-image:none;display:flex;align-items:center;justify-content:center;color:#eee}
 #landing.hide{display:none}
-#landing .world-interactive{position:absolute;inset:0;width:100%;height:100%;border:0;z-index:0;background:transparent;pointer-events:auto}#landing .lw{position:relative;z-index:2;pointer-events:none}#landing .lw button,#landing .lw input,#landing .lw label,#landing .lw a{pointer-events:auto}
+#landing .world-interactive{position:absolute;inset:0;width:100%;height:100%;border:0;z-index:0;background:transparent;pointer-events:auto}#landing .lw{position:relative;z-index:2;pointer-events:none}#landing .lw button,#landing .lw input,#landing .lw label,#landing .lw a{position:relative;z-index:3;pointer-events:auto}#landing .lb{position:relative;z-index:4}
 #landing .lw{position:relative;z-index:2;pointer-events:auto}
 #landing .world-fallback{position:absolute;inset:0;z-index:-1;pointer-events:none}
 #landing .lw{background:#14161cdd;border:1px solid #ffffff22;border-radius:14px;padding:26px 36px;text-align:center;max-width:560px;backdrop-filter:blur(3px)}
@@ -271,11 +271,11 @@ header{flex-wrap:wrap} header .header-brand{margin-right:8px}
  <div class="ribbon-panel" id="ribbon-panel-export" hidden><div class="ribbon-group"><button data-action="export-tab">📦 Tuiles &amp; export</button><button data-action="save">💾 Enregistrer projet</button><span class="ribbon-group-label">Sortie</span></div></div>
 </nav>
 <div id="ws">
- <div id="landing"><iframe class="world-interactive" id="landing-world" src="/worldLow-pixel-map.html" title="Carte du monde interactive en arrière-plan" loading="eager" onerror="this.style.display='none'"></iframe><div class="lw"><div class="brand-row"><img class="lico" src="/icon.svg" onerror="this.onerror=null;this.src='/icon.png'" alt="Logo KalipheTiles"><div><h1>KalipheTiles</h1><p class="tagline">Studio cartographique · Géoréférencement & imagerie</p><div id="user-greeting" class="user-greeting"></div></div></div>
+ <div id="landing"><iframe class="world-interactive" id="landing-world" src="/worldLow-pixel-map.html" title="Carte du monde interactive en arrière-plan" loading="eager"></iframe><div class="lw"><div class="brand-row"><img class="lico" src="/icon.svg" onerror="this.onerror=null;this.src='/icon.png'" alt="Logo KalipheTiles"><div><h1>KalipheTiles</h1><p class="tagline">Studio cartographique · Géoréférencement & imagerie</p><div id="user-greeting" class="user-greeting"></div></div></div>
   <p>Un espace de travail cartographique pour géoréférencer vos images, organiser vos calques, assembler vos cartes et exporter vos données géospatiales.</p>
   <div class="lb"><button class="big" id="l-open">＋ Ouvrir une image</button><button class="big" id="l-proj">📂 Ouvrir un projet</button></div>
   <div class="brand-controls"><strong style="font-size:12px;color:#475569;margin-right:4px">Identité visuelle</strong><button type="button" id="logo-pick">Importer un logo</button><input id="logo-file" type="file" accept="image/*,.svg,image/svg+xml" hidden><label for="logo-color">Couleur SVG <input id="logo-color" type="color" value="#185abd" aria-label="Couleur du logo SVG"></label><button type="button" id="logo-reset">Réinitialiser</button><small id="logo-color-note">La recoloration fonctionne pour les logos SVG.</small></div>
-  <div class="login-row"><div><label for="login-name">Votre nom d’utilisateur</label><input id="login-name" type="text" maxlength="60" autocomplete="nickname" placeholder="Ex. @GTUrbaines"></div><button type="button" id="login-save">Enregistrer mon nom</button></div>
+  <div class="login-row"><div><label for="login-name">Votre nom d’utilisateur</label><input id="login-name" type="text" maxlength="60" autocomplete="nickname" placeholder="Ex. Mayssa"></div><button type="button" id="login-save">Enregistrer mon nom</button></div>
   <small style="display:block;margin-top:12px">Le nom est enregistré localement dans ce navigateur. Il s’agit d’un profil local, pas d’un compte sécurisé avec mot de passe.</small>
   <small style="display:block;margin-top:12px">Vous pouvez aussi glisser-déposer une image ou un projet .ktproj dans la fenêtre.</small>
   <ol><li>Chargez une image et ajoutez au moins trois points de contrôle.</li><li>Associez les points de l’image à leurs positions sur la carte.</li><li>Vérifiez l’aperçu, puis exportez le résultat.</li></ol></div></div>
@@ -952,8 +952,8 @@ document.querySelectorAll('.ribbon-group button[data-action]').forEach(btn=>btn.
  }
 }));
 
-// Prefer the updated SVG map background, but fall back to PNG if an older install lacks it.
-(()=>{const im=new Image();im.onerror=()=>{document.getElementById('landing').style.backgroundImage='url(/world.png)';};im.src='/world.svg';})();
+// Le fond de landing est exclusivement la carte interactive fournie dans static/worldLow-pixel-map.html.
+(()=>{const frame=document.getElementById('landing-world');if(frame){frame.addEventListener('load',()=>frame.dataset.loaded='true');frame.addEventListener('error',()=>{frame.dataset.loaded='false';console.warn('Fond interactif absent : placez worldLow-pixel-map.html dans static/.');});}})();
 // ---------- Paramètres généraux, aide et réglages de précision ----------
 const generalSettings=document.getElementById('general-settings');
 const markerSettingDefaults={size:46,color:'#185abd',opacity:100,label:11,precision:6,drawColor:'#ff8c00',drawFill:'#ffcc80',drawWidth:3,loupeColor:'#185abd',iconSize:132,iconLine:'#185abd',iconFill:'#fca311'};
@@ -1319,7 +1319,11 @@ $("#ot-test").onclick=async()=>{
 // ---------- Accueil, onglets d'images, calques sur la carte ----------
 let projPath="",exportDest="";
 function updLanding(){const landingVisible=!layers.length;$("#landing").classList.toggle("hide",!landingVisible);const ribbon=document.getElementById("office-ribbon");if(ribbon)ribbon.style.display=landingVisible?"none":"block";if(!layers.length)$("#w-img .wh span").textContent="🖼 Image à géoréférencer"}
-$("#l-open").onclick=()=>$("#file").click();$("#l-proj").onclick=()=>$("#pf").click();
+// Les boutons du landing ouvrent directement les sélecteurs natifs, sans passer par le ruban.
+function openNativePicker(id){const input=document.getElementById(id);if(!input)return;input.value="";try{input.click();}catch(err){console.error("Ouverture du sélecteur impossible",err);}}
+const landingOpen=document.getElementById("l-open"),landingProject=document.getElementById("l-proj");
+if(landingOpen){landingOpen.type="button";landingOpen.addEventListener("click",e=>{e.preventDefault();e.stopPropagation();openNativePicker("file");});}
+if(landingProject){landingProject.type="button";landingProject.addEventListener("click",e=>{e.preventDefault();e.stopPropagation();openNativePicker("pf");});}
 ["dragover","drop"].forEach(t=>$("#ws").addEventListener(t,async e=>{
  e.preventDefault();if(t!="drop")return;const f=e.dataTransfer.files[0];if(!f)return;
  if(/\.ktproj$/i.test(f.name))return openProjectFile(f);
