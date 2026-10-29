@@ -1327,7 +1327,7 @@ $("#ot-test").onclick=async()=>{
 let projPath="",exportDest="";
 function updLanding(){const landingVisible=!layers.length;$("#landing").classList.toggle("hide",!landingVisible);const ribbon=document.getElementById("office-ribbon");if(ribbon)ribbon.style.display=landingVisible?"none":"block";if(!layers.length)$("#w-img .wh span").textContent="🖼 Image à géoréférencer"}
 // Les boutons du landing ouvrent directement les sélecteurs natifs, sans passer par le ruban.
-function openNativePicker(id){const input=document.getElementById(id);if(!input)return;input.value="";try{input.focus({preventScroll:true});if(typeof input.showPicker==="function")input.showPicker();else input.click();}catch(err){console.error("Ouverture du sélecteur impossible ("+id+")",err);try{input.click();}catch(fallbackError){console.error("Clic de secours impossible",fallbackError);}}}
+function openNativePicker(id){const input=document.getElementById(id);if(!input){console.error("Sélecteur de fichier introuvable :",id);return;}input.value="";try{input.click();}catch(err){console.error("Ouverture du sélecteur impossible ("+id+")",err);const msg=document.getElementById("landing-picker-error");if(msg)msg.textContent="Impossible d’ouvrir la fenêtre de fichiers : "+(err&&err.message||err);}}
 const landingOpen=document.getElementById("l-open"),landingProject=document.getElementById("l-proj"),landingProjectInput=document.getElementById("landing-pf");
 if(landingOpen){landingOpen.type="button";landingOpen.addEventListener("click",e=>{e.preventDefault();e.stopPropagation();openNativePicker("file");});}
 if(landingProject){landingProject.type="button";landingProject.addEventListener("click",e=>{e.preventDefault();e.stopPropagation();openNativePicker("landing-pf");});}
