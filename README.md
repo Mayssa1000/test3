@@ -1,40 +1,23 @@
 # KalipheTiles (Windows 11)
 
-Géoréférencement d'images (JPG/PNG/TIFF), collage de plusieurs images, tuiles XYZ / MBTiles / GeoPackage (256 ou 512 px),
-GeoTIFF, Shapefile, GeoJSON (cadre), KMZ, world files, envoi S3.
-Résultats : Documents\KalipheTiles\<id>\ (exports\ contient le cadre GeoJSON créé automatiquement).
-Journal : Documents\KalipheTiles\kaliphetiles.log — bouton « 🔧 Diagnostic » dans l'application.
-Raccourcis : Ctrl+Z / Ctrl+Y, Suppr, Échap, Ctrl+S.
-# KalipheTiles
+Géoréférencement d'images (JPG, PNG, TIFF, MNT 16/32 bits), onglets d'images, collage avec synchronisation des couleurs,
+aperçu en direct, relief 3D, heightmap OpenTopography, tuiles XYZ / MBTiles / GeoPackage, GeoTIFF, Shapefile, GeoJSON, JSON des limites, KMZ, S3.
+Dossier de travail : Documents\KalipheTiles — journal : kaliphetiles.log — bouton « 🔧 Diagnostic ».
+Icône : static/icon.png (le workflow en fait l'icône de l'exe) — marqueurs : static/loupe.png — accueil : static/world.png.
+Raccourcis : Ctrl+Z / Ctrl+Y, Suppr, Échap, Ctrl+S (enregistrer), Ctrl+Maj+S (enregistrer sous).
 
-Application locale de géoréférencement d'images (JPG/PNG/TIFF), collage de plusieurs images, tuiles XYZ / MBTiles / GeoPackage,
-GeoTIFF, Shapefile, GeoJSON, KMZ, world files et envoi S3.
 
-## Ajouts de cette version
-- Saisie de quatre points de contrôle (GCP) en pixels image et coordonnées géographiques EPSG:4326, avec contrôle des limites.
-- Ajustement de l'affichage de l'image source : ajustement à la fenêtre après chargement, protection contre une taille de fenêtre nulle et message en cas d'erreur de chargement.
-- Correction automatique optionnelle du contraste tonal de l'image, en préservant l'alpha.
-- Bouton de relief 3D sur la carte, utilisant des tuiles d'altitude Terrarium publiques (connexion internet nécessaire).
-- Panneau OpenTopography pour télécharger un MNT GeoTIFF sur une emprise WGS84 et avec une clé API personnelle.
-- Bascule d'apparence sombre/clair.
+## Import vectoriel, DXF et PMTiles (ajouts)
+- L'en-tête propose l'import GeoJSON, KML, Shapefile compressé en ZIP et DXF, avec affichage des entités sur la carte.
+- Le bouton DXF exporte le dernier jeu de vecteurs importé. Le module `ezdxf` est inclus dans les dépendances.
+- Le bouton PMTiles convertit le fichier MBTiles produit par le géoréférencement. Le binaire officiel `pmtiles` doit être installé et accessible dans le PATH de la machine.
+- Les fichiers DWG, SKP, RVT et 3DM ne sont pas convertis nativement par cette version. Pour les échanger, utiliser un convertisseur spécialisé ou exporter depuis le logiciel d'origine vers DXF (2D), IFC (BIM) ou un format maillé tel que OBJ/glTF (3D). La conversion intermédiaire peut perdre des données.
 
-## OpenTopography
-Dans l'onglet « MNT / OpenTopography », renseignez une clé API personnelle, choisissez un modèle numérique de terrain, puis saisissez l'emprise Ouest/Sud/Est/Nord en longitude/latitude WGS84. Le bouton « Utiliser l'emprise de la carte » remplit ces limites à partir de l'étendue visible. Le résultat est téléchargé sous `opentopography_dem.tif`. La clé n'est pas enregistrée par l'application. La disponibilité des modèles et les limites de taille sont soumises aux conditions de l'API OpenTopography.
 
-## Points de contrôle
-Les valeurs géographiques initiales affichées (autour de 2°E, 48°N) sont des exemples : remplacez-les par vos coordonnées réelles. Cliquez sur « Remplir les coins de l'image » pour remplir les coordonnées pixel à partir des dimensions de l'image. Trois points non alignés suffisent mathématiquement pour une affine ; le quatrième aide à contrôler la cohérence.
+## UX et outils de carte ajoutés
+- Barre Fichier compacte avec import vecteur/DXF/PDF/SVG et export DXF/PMTiles.
+- Mesure de ligne, polyligne, surface, ligne de repère et grille métrique configurable (mètres).
+- Réorganisation des calques par glisser-déposer dans la liste Calques.
+- Dépôt de fichiers raster/vectoriels dans la fenêtre pour lancer leur import.
 
-## Données et exports
-Résultats : `Documents\KalipheTiles\<id>\` (`exports\` contient les exports). L'export GeoTIFF utilise l'emprise du ou des calques sélectionnés et visibles conformément au flux d'export existant.
-Journal : `Documents\KalipheTiles\kaliphetiles.log` — bouton « Diagnostic ».
-Raccourcis : Ctrl+Z / Ctrl+Y, Suppr, Échap, Ctrl+S.
-
-## Améliorations de l'interface (version de travail)
-
-- Page d'accueil avec le logo du logiciel (`static/icon.png`).
-- Dans **Points**, le menu « Méthode de placement » prépare les pixels des points par les quatre coins ou par les directions Nord, Sud, Est et Ouest. Les coordonnées géographiques doivent être vérifiées avant d'appliquer les points.
-- Dans **Calques**, la case à cocher de chaque image contrôle sa visibilité indépendamment sur la carte et son inclusion dans le collage.
-- Dans **Image**, « Actualiser l'aperçu » permet de relancer l'aperçu après une opération.
-- Dans **Tuiles & export**, les cases optionnelles permettent de créer un GeoTIFF géoréférencé individuel pour chaque image, en version courante et/ou originale, en plus des formats de collage sélectionnés.
-
-L'export original individuel utilise les points actuellement associés au calque. Après un recadrage, vérifiez particulièrement l'alignement de cet export original, car les coordonnées pixel du calque sont ajustées par le recadrage.
+Limites : le quadrillage est une grille métrique approximée localement en latitude/longitude (adaptée à une zone de travail, pas aux grandes emprises). Les formats propriétaires DWG/SKP/RVT/3DM ne sont pas convertis nativement. Les outils sont ajoutés au front-end existant et doivent être validés avec les jeux de données réels de l’installation.
