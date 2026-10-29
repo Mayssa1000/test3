@@ -396,6 +396,19 @@ def fonts(stack: str, rng: str):
 def diag():
     return {"data_dir": str(DATA), "frozen": bool(getattr(sys, "frozen", False)), "tests": basemaps.diag(load_settings(), CACHE)}
 
+@app.get("/{asset}.svg")
+def static_svg(asset: str):
+    if asset not in ("icon", "loupe", "world"): raise HTTPException(404)
+    path = STATIC / f"{asset}.svg"
+    if not path.is_file(): raise HTTPException(404)
+    return Response(path.read_bytes(), media_type="image/svg+xml", headers={"Cache-Control": "public, max-age=3600"})
+
+@app.get("/worldLow-pixel-map.html", response_class=HTMLResponse)
+def landing_world():
+    path = STATIC / "worldLow-pixel-map.html"
+    if not path.is_file(): raise HTTPException(404)
+    return HTMLResponse(path.read_text(encoding="utf-8"))
+
 @app.get("/{asset}.png")
 def static_png(asset: str):
     if asset not in ("icon", "loupe", "world"): raise HTTPException(404)
