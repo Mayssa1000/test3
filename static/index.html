@@ -233,6 +233,12 @@ header{flex-wrap:wrap} header .header-brand{margin-right:8px}
 @media(max-width:900px){#ws{grid-template-columns:minmax(0,1fr);grid-template-rows:minmax(180px,38%) 7px minmax(190px,1fr) minmax(180px,35%);overflow:auto}#w-img{grid-column:1;grid-row:1}#dock-v{display:none}#dock-h{grid-column:1;grid-row:2}#w-map{grid-column:1;grid-row:3;border-radius:0}#w-pan{grid-column:1;grid-row:4;border-radius:0 0 9px 9px}header{max-height:24vh;overflow:auto}}
 @media(max-width:520px){.map-tools{max-height:42%;max-width:calc(100% - 12px);left:6px;bottom:8px}.map-modebar{top:5px;left:5px;right:5px;padding:4px}.map-modebar .mode-hint{display:none}}
 
+
+/* Floating, independent landing panel: stays above the interactive world iframe. */
+#landing .lw{position:fixed!important;left:50%!important;top:50%!important;transform:translate(-50%,-50%)!important;z-index:10001!important;pointer-events:auto!important;isolation:isolate;max-height:calc(100vh - 32px);overflow-y:auto;}
+#landing .lw button,#landing .lw input,#landing .lw label,#landing .lw a,#landing .lw select{pointer-events:auto!important;}
+#landing .world-interactive{z-index:0!important;}
+@media(max-width:620px){#landing .lw{width:calc(100vw - 24px);max-width:560px;padding:20px!important;}}
 </style></head><body>
 <header>
  <b class="header-brand"><img src="/icon.svg" onerror="this.onerror=null;this.src='/icon.svg'" alt="Logo KalipheTiles" title="KalipheTiles"></b>
