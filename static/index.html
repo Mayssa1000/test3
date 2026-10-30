@@ -292,7 +292,7 @@ header{flex-wrap:wrap} header .header-brand{margin-right:8px}
  <div class="win" id="w-map" style="left:48%;top:6px;width:51%;height:96%"><div class="wh"><span>🗺 Carte</span><span class="wbtn"><span class="window-history"><button type="button" id="map-window-undo" title="Annuler mesure/dessin (Ctrl+Z)">↶</button><button type="button" id="map-window-redo" title="Rétablir mesure/dessin (Ctrl+Y)">↷</button></span><button class="wf" title="Plein écran (double-clic sur la barre)">⛶</button><button class="wm" title="Réduire">–</button></span></div>
   <div class="wb"><div id="mapwrap">
 
-<div class="map-modebar" role="group" aria-label="Mode de travail"><b>Mode :</b><button type="button" id="mode-georef" class="active" aria-pressed="true">🎯 Géoréférencer</button><button type="button" id="mode-draw">📐 Mesurer &amp; dessiner</button><span class="mode-hint" id="mode-hint">Cliquez sur la carte pour placer un point de contrôle</span></div><div id="map"></div><div id="context-menu" role="menu" style="display:none;position:absolute;z-index:10000;background:#fff;color:#172033;border:1px solid #cbd5e1;border-radius:8px;box-shadow:0 8px 24px #0003;padding:5px;min-width:150px"><button type="button" data-action="delete" style="display:block;width:100%;text-align:left">Supprimer</button><button type="button" data-action="fix" style="display:block;width:100%;text-align:left">Rendre fixe</button></div><div class="map-tools" id="map-tools" aria-label="Outils de mesure et repères"><b>Outils carte</b><button type="button" id="measure-line" title="Mesurer une ligne">↗ Ligne</button><button type="button" id="measure-path" title="Mesurer une polyligne (double-clic pour terminer)">〰 Polyligne</button><button type="button" id="measure-area" title="Mesurer une surface (double-clic pour terminer)">⬠ Surface</button><button type="button" id="measure-finish" title="Terminer la mesure">✓ Terminer</button><button type="button" id="measure-clear" title="Effacer les mesures et dessins">Effacer</button><button type="button" id="measure-undo" title="Annuler mesure/dessin (Ctrl+Z)" aria-label="Annuler mesure/dessin">↶</button><button type="button" id="measure-redo" title="Rétablir mesure/dessin (Ctrl+Y)" aria-label="Rétablir mesure/dessin">↷</button><label>Couleur <input id="draw-color" type="color" value="#ff8c00" aria-label="Couleur des lignes" style="width:32px;padding:1px"></label><label>Épaisseur <input id="draw-width" type="number" min="1" max="12" value="3" aria-label="Épaisseur des lignes" style="width:48px"></label><label title="Espacement des carrés de la grille">Pas <input id="grid-spacing" type="number" min="1" step="1" value="100" aria-label="Espacement de la grille en mètres"> m</label><button type="button" id="grid-polygon" title="Dessiner le polygone qui délimite la grille">⬠ Polygone grille</button><button type="button" id="grid-toggle" title="Afficher une grille uniquement dans le polygone dessiné">▦ Grille polygone</button><button type="button" id="ref-line" title="Dessiner une ligne de repère">⌁ Repère</button><span id="map-tool-status" class="tool-status">Prêt</span></div>
+<div class="map-modebar" role="group" aria-label="Mode de travail"><b>Mode :</b><button type="button" id="mode-georef" class="active" aria-pressed="true">🎯 Géoréférencer</button><button type="button" id="mode-draw" aria-pressed="false">📐 Mesurer &amp; dessiner</button><button type="button" id="b-map-home" title="Cadrer l’image active sur la carte">⌂ Accueil image</button><button type="button" id="b-map-globe" title="Basculer entre la vue globe et la vue plane" aria-pressed="false">🌐 Globe</button><span class="mode-hint" id="mode-hint">Cliquez sur la carte pour placer un point de contrôle</span></div><div id="map"></div><div id="context-menu" role="menu" style="display:none;position:absolute;z-index:10000;background:#fff;color:#172033;border:1px solid #cbd5e1;border-radius:8px;box-shadow:0 8px 24px #0003;padding:5px;min-width:150px"><button type="button" data-action="delete" style="display:block;width:100%;text-align:left">Supprimer</button><button type="button" data-action="fix" style="display:block;width:100%;text-align:left">Rendre fixe</button></div><div class="map-tools" id="map-tools" aria-label="Outils de mesure et repères"><b>Outils carte</b><button type="button" id="measure-line" title="Mesurer une ligne">↗ Ligne</button><button type="button" id="measure-path" title="Mesurer une polyligne (double-clic pour terminer)">〰 Polyligne</button><button type="button" id="measure-area" title="Mesurer une surface (double-clic pour terminer)">⬠ Surface</button><button type="button" id="measure-finish" title="Terminer la mesure">✓ Terminer</button><button type="button" id="measure-clear" title="Effacer les mesures et dessins">Effacer</button><button type="button" id="measure-undo" title="Annuler mesure/dessin (Ctrl+Z)" aria-label="Annuler mesure/dessin">↶</button><button type="button" id="measure-redo" title="Rétablir mesure/dessin (Ctrl+Y)" aria-label="Rétablir mesure/dessin">↷</button><label>Couleur <input id="draw-color" type="color" value="#ff8c00" aria-label="Couleur des lignes" style="width:32px;padding:1px"></label><label>Épaisseur <input id="draw-width" type="number" min="1" max="12" value="3" aria-label="Épaisseur des lignes" style="width:48px"></label><label title="Espacement des carrés de la grille">Pas <input id="grid-spacing" type="number" min="1" step="1" value="100" aria-label="Espacement de la grille en mètres"> m</label><button type="button" id="grid-polygon" title="Dessiner le polygone qui délimite la grille">⬠ Polygone grille</button><button type="button" id="grid-toggle" title="Afficher une grille uniquement dans le polygone dessiné">▦ Grille polygone</button><button type="button" id="ref-line" title="Dessiner une ligne de repère">⌁ Repère</button><span id="map-tool-status" class="tool-status">Prêt</span></div>
   <div class="mbar"><button id="b-ovt" title="Masquer / afficher les outils sur la carte">☰</button>
    <label title="Afficher / masquer l'image sur la carte"><input type="checkbox" id="imgvis" checked> Image</label>
    <input type="range" id="opac" min="0" max="1" step=".05" value=".85" title="Transparence de l'image">
@@ -541,6 +541,15 @@ function toggleGlobe(){
  if(map.isStyleLoaded())apply();else map.once("load",apply);
 }
 document.getElementById("b-globe")?.addEventListener("click",toggleGlobe);
+document.getElementById("b-map-globe")?.addEventListener("click",toggleGlobe);
+function fitMapToActiveImage(){
+ const pts=(Array.isArray(gcps)&&gcps.length?gcps:(layers||[]).flatMap(l=>l.gcps||[])).filter(p=>Number.isFinite(+p.lon)&&Number.isFinite(+p.lat));
+ if(!pts.length){st("Ajoutez des points de contrôle pour cadrer l’image sur la carte.");return;}
+ const west=Math.min(...pts.map(p=>+p.lon)),east=Math.max(...pts.map(p=>+p.lon)),south=Math.min(...pts.map(p=>+p.lat)),north=Math.max(...pts.map(p=>+p.lat));
+ if(west===east&&south===north){map.flyTo({center:[west,south],zoom:17});return;}
+ map.fitBounds([[west,south],[east,north]],{padding:{top:90,bottom:70,left:70,right:70},maxZoom:18,duration:700});st("Image cadrée dans la fenêtre Carte.");
+}
+document.getElementById("b-map-home")?.addEventListener("click",fitMapToActiveImage);
 map.addControl(new maplibregl.NavigationControl({visualizePitch:false}),"bottom-right");
 map.addControl(new maplibregl.ScaleControl(),"bottom-left");
 async function setBase(id){
@@ -840,15 +849,22 @@ $("#undo").onclick=undo;$("#redo").onclick=redo;
 const methodImg=document.getElementById('method-img'),methodMain=document.getElementById('method');if(methodImg&&methodMain){methodImg.value=methodMain.value;methodImg.onchange=()=>{methodMain.value=methodImg.value;methodMain.dispatchEvent(new Event('change',{bubbles:true}));};methodMain.addEventListener('change',()=>{methodImg.value=methodMain.value;});}document.getElementById('img-undo')?.addEventListener('click',undo);document.getElementById('img-redo')?.addEventListener('click',redo);document.getElementById('img-merge')?.addEventListener('click',()=>document.getElementById('b-merge-images')?.click());
 document.addEventListener("keydown",e=>{
  const T=e.target,tag=(T.tagName||"").toLowerCase();
- if(tag=="textarea"||(tag=="input"&&["text","number"].includes(T.type)))return;
+ if(tag==="textarea"||(tag==="input"&&["text","number"].includes(T.type)))return;
  const c=e.ctrlKey||e.metaKey,key=e.key.toLowerCase();
- const overMap=!!T.closest?.('#w-map')||!!document.querySelector('#w-map:hover');const overImage=!!T.closest?.('#w-img')||!!document.querySelector('#w-img:hover');const overTools=!!T.closest?.('#w-pan')||!!document.querySelector('#w-pan:hover');
- if(c&&key=="z"&&!e.shiftKey){e.preventDefault();if(overMap){if(mapWorkMode==='draw')undoMeasure();else undo()}else undo()}
- else if(c&&(key=="y"||(key=="z"&&e.shiftKey))){e.preventDefault();if(overMap){if(mapWorkMode==='draw')redoMeasure();else redo()}else redo()}
- else if((e.key=="Delete"||e.key=="Backspace")&&sel>=0){e.preventDefault();del(sel)}
- else if(c&&key=="s"){e.preventDefault();saveProject(e.shiftKey)}
- else if(e.key=="Escape"&&(moveMode||document.querySelector(".win.full"))){if(moveMode)$("#b-move").click();const f=document.querySelector(".win.full");if(f){f.classList.remove("full");setTimeout(()=>{map.resize();nat.w&&fit()},50)}}
- else if(e.key=="Escape"){if(pend.img||pend.geo){commit();pend={img:null,geo:null}}else sel=-1;redraw()}
+ const overMap=!!T.closest?.("#w-map")||!!document.querySelector("#w-map:hover");
+ const overImage=!!T.closest?.("#w-img")||!!document.querySelector("#w-img:hover");
+ const overTools=!!T.closest?.("#w-pan")||!!document.querySelector("#w-pan:hover");
+ const redoKey=key==="y"||(key==="z"&&e.shiftKey);
+ if(c&&(key==="z"||key==="y")){
+   if(overMap){e.preventDefault();if(mapWorkMode==="draw"){redoKey?redoMeasure():undoMeasure();}else{redoKey?redo():undo();}}
+   else if(overImage){e.preventDefault();redoKey?redo():undo();}
+   else if(overTools){e.preventDefault();redoKey?redoMeasure():undoMeasure();}
+   return;
+ }
+ if((e.key==="Delete"||e.key==="Backspace")&&sel>=0&&!overTools){e.preventDefault();del(sel);}
+ else if(c&&key==="s"){e.preventDefault();saveProject(e.shiftKey);}
+ else if(e.key==="Escape"&&(moveMode||document.querySelector(".win.full"))){if(moveMode)$("#b-move").click();const f=document.querySelector(".win.full");if(f){f.classList.remove("full");setTimeout(()=>{map.resize();nat.w&&fit()},50);}}
+ else if(e.key==="Escape"){if(pend.img||pend.geo){commit();pend={img:null,geo:null};}else sel=-1;redraw();}
 });
 function coordText(){
  const a=$("#coord1").value.trim(),b=$("#coord2").value.trim(),z=$("#czone").value.trim();
@@ -1365,12 +1381,11 @@ $("#b-ml").onclick=()=>$("#mlay").classList.toggle("hide");
 $("#b-contrast").onclick=()=>edit({op:"contrast"});
 
 // ---------- Thème clair / sombre ----------
-function setTheme(dark){document.getElementById("darkcss").disabled=!dark;document.documentElement.dataset.theme=dark?"dark":"light";document.body.dataset.theme=dark?"dark":"light";$("#b-theme").textContent=dark?"☀":"🌙";$("#b-theme").title=dark?"Passer en mode clair":"Passer en mode sombre";cfg.theme=dark?"dark":"light";const sz=document.getElementById("gcp-size")?.value||46;document.documentElement.style.setProperty("--gcp-marker-size",sz+"px");const logoSize=document.getElementById("app-icon-size")?.value||132;document.documentElement.style.setProperty("--app-icon-size",logoSize+"px");const headerLogo=document.querySelector("header .header-brand img");if(headerLogo){headerLogo.style.width="32px";headerLogo.style.height="32px";headerLogo.style.maxWidth="32px";headerLogo.style.maxHeight="32px";}}
+function setTheme(dark){document.documentElement.dataset.theme=dark?"dark":"light";document.body.dataset.theme=dark?"dark":"light";$("#b-theme").textContent=dark?"☀":"🌙";$("#b-theme").title=dark?"Passer en mode clair":"Passer en mode sombre";cfg.theme=dark?"dark":"light";const sz=document.getElementById("gcp-size")?.value||46;document.documentElement.style.setProperty("--gcp-marker-size",sz+"px");const logoSize=document.getElementById("app-icon-size")?.value||132;document.documentElement.style.setProperty("--app-icon-size",logoSize+"px");const headerLogo=document.querySelector("header .header-brand img");if(headerLogo){headerLogo.style.width="32px";headerLogo.style.height="32px";headerLogo.style.maxWidth="32px";headerLogo.style.maxHeight="32px";}}
 $("#b-theme").onclick=(e)=>{
   // Le bouton de thème ne doit jamais déclencher une action de fenêtre ou de ruban.
   e.preventDefault(); e.stopPropagation();
-  const darkStyle=document.getElementById("darkcss");
-  const nextDark=darkStyle.disabled;
+  const nextDark=document.documentElement.dataset.theme!=="dark";
   setTheme(nextDark);
   fetch("/api/settings",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(cfg)}).catch(()=>{});
 };
