@@ -374,8 +374,17 @@ def set_settings(s: dict):
     ram_limit_gb = max(1, min(128, ram_limit_gb))
     keep = {"mapbox": str(s.get("mapbox", "")), "google": str(s.get("google", "")), "opentopo": str(s.get("opentopo", "")), "theme": str(s.get("theme", "dark")), "out_dir": str(s.get("out_dir", "")),
             "cpu_workers": cpu_workers, "ram_limit_gb": ram_limit_gb,
-            "s3": {k: str(v) for k, v in (s.get("s3") or {}).items()}}
+            "s3": {k: str(v) for k, v in (s.get("s3") or {}).items()},
+            "ui": load_settings().get("ui", {})}      # réglages d'affichage : conservés
     SETTINGS.write_text(json.dumps(keep)); return {"ok": True}
+
+@app.get("/api/ui")
+def get_ui(): return load_settings().get("ui", {})
+
+@app.post("/api/ui")
+def set_ui(s: dict):                       # persistance côté serveur (le port change à chaque lancement)
+    d = load_settings(); d["ui"] = s
+    SETTINGS.write_text(json.dumps(d)); return {"ok": True}
 
 @app.get("/tiles/{prov}/{z}/{x}/{y}")
 def tiles(prov: str, z: int, x: int, y: int):

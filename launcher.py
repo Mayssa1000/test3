@@ -25,7 +25,11 @@ try:
         except OSError: time.sleep(0.1)
     logging.info("démarrage sur le port %s", port)
     class Api:                       # boîtes de dialogue natives : choisir où enregistrer le projet / les exports
-        win = None
+        win = None; has_project = False; force = False
+        def set_state(self, has_project):   # appelé par l'interface : un projet est-il ouvert ?
+            self.has_project = bool(has_project)
+        def quit_now(self):                 # appelé après le choix de l'utilisateur dans le popup de fermeture
+            self.force = True; self.win.destroy()
         def choose_folder(self):
             r = self.win.create_file_dialog(webview.FOLDER_DIALOG)
             return (r[0] if r else None)
@@ -35,6 +39,12 @@ try:
     api = Api()
     win = webview.create_window("KalipheTiles", f"http://127.0.0.1:{port}", width=1400, height=850, background_color="#0e1014", js_api=api)
     api.win = win
+
+    def on_closing():                # demande « enregistrer ? » avant de quitter si un projet est ouvert
+        if api.force or not api.has_project: return True
+        threading.Thread(target=lambda: win.evaluate_js("window.ktAskClose&&window.ktAskClose()"), daemon=True).start()
+        return False
+    win.events.closing += on_closing
 
     def set_icon():      # icône de la fenêtre (exe ou lancement depuis les sources)
         try:
