@@ -535,6 +535,7 @@ function toggleGlobe(){
   if(typeof map.setProjection!=="function")throw new Error("API setProjection absente; vérifiez la version de MapLibre chargée");
   const next=!globeView; map.setProjection({type:next?"globe":"mercator"}); globeView=next;
   const b=document.getElementById("b-globe"); if(b){b.textContent=globeView?"🗺️ Vue plane":"🌐 Vue globe";b.setAttribute("aria-pressed",String(globeView));}
+  const mb=document.getElementById("b-map-globe");if(mb){mb.textContent=globeView?"🗺️ Vue plane":"🌐 Globe";mb.setAttribute("aria-pressed",String(globeView));}
   document.querySelectorAll('[data-action="globe"]').forEach(x=>x.textContent=globeView?"🗺️ Vue plane":"🌐 Vue globe");
   map.resize(); map.triggerRepaint(); st(globeView?"Vue globe activée":"Vue plane activée");
  }catch(e){st("Échec vue globe : "+(e?.message||e)); console.error("KalipheTiles globe projection",e);}finally{globeTogglePending=false;}};
